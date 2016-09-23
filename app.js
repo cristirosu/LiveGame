@@ -1,102 +1,150 @@
 var riotApp = angular.module("liveGame", []);
 
-riotApp.controller("mainCtrl", function($scope){
+riotApp.controller("mainCtrl", function ($scope, summonerService) {
     $scope.test = "Test";
+    $scope.isErrorResponse = false;
+    $scope.errorMessage = "";
+    $scope.requestIsProccesing = false;
+
+    $scope.searchLiveGameInfo = function () {
+        $scope.requestIsProccesing = true;
+        summonerService.getLiveGameInfo($scope.summonerName)
+            .then(function successCallback(response) {
+                    $scope.isErrorResponse = false;
+                    console.log(response.data);
+                    $scope.liveGameInfo = response.data;
+                    $scope.requestIsProccesing = false;
+                },
+                function errorCallback(response) {
+                    console.log(response.status);
+                    $scope.errorMessage = "sss";
+                    $scope.isErrorResponse = true;
+                    if(response.data.errorMessage){
+                        $scope.errorMessage = response.data.errorMessage;
+                    }
+                    else{
+                        $scope.errorMessage = "An unknown error has occured";
+                    }
+                    $scope.requestIsProccesing = false;
+                }
+            )
+    };
+
+    $scope.printWidth = function(){
+        $scope.screenWidth = window.innerWidth;
+        console.log("sss");
+        console.log(screen.width);
+    };
+
+    $scope.searchInputKeyEvent = function(event){
+        if(event.keyCode === 13){
+            $scope.searchLiveGameInfo();
+        } else if(event.keyCode === 27) $scope.summonerName = "";
+    };
+
+
+    $scope.blueFilter = function (item) {
+        return item.teamId === 100;
+    };
+
+    $scope.purpleFilter = function (item) {
+        return item.teamId === 200;
+    };
 
     $scope.testData = {
-        gameId: 1517738510,
+        gameId: 1520736406,
         gameLength: null,
         gameStarTime: null,
         bannedChampions: [
             {
-                championName: "Soraka",
-                bannedChampionImage: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Soraka.png",
+                championName: "Irelia",
+                bannedChampionImage: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Irelia.png",
                 teamId: 100,
-                championId: 16
+                championId: 39
             },
             {
-                championName: "Fizz",
-                bannedChampionImage: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Fizz.png",
+                championName: "Yasuo",
+                bannedChampionImage: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Yasuo.png",
                 teamId: 200,
-                championId: 105
+                championId: 157
             },
             {
-                championName: "Illaoi",
-                bannedChampionImage: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Illaoi.png",
+                championName: "Lucian",
+                bannedChampionImage: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Lucian.png",
                 teamId: 100,
-                championId: 420
+                championId: 236
             },
             {
-                championName: "Zac",
-                bannedChampionImage: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Zac.png",
+                championName: "Zed",
+                bannedChampionImage: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Zed.png",
                 teamId: 200,
-                championId: 154
+                championId: 238
             },
             {
-                championName: "Yorick",
-                bannedChampionImage: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Yorick.png",
+                championName: "Hecarim",
+                bannedChampionImage: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Hecarim.png",
                 teamId: 100,
-                championId: 83
+                championId: 120
             },
             {
-                championName: "Nidalee",
-                bannedChampionImage: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Nidalee.png",
+                championName: "Annie",
+                bannedChampionImage: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Annie.png",
                 teamId: 200,
-                championId: 76
+                championId: 1
             }
         ],
         summoners: [
             {
-                summonerName: "F5 LionHeart",
-                summonerId: 52324738,
-                championName: null,
-                teamId: 52324738,
+                summonerName: "PaÅ„da",
+                summonerId: 36283830,
+                championName: "Kalista",
+                teamId: 100,
                 imgInfo: {
-                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Janna.png",
-                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerExhaust.png",
+                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Kalista.png",
+                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerHeal.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    divisionImg: "http://localhost:8080/RESTfulExample/base_icons/diamond.png",
-                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6363.png",
+                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/gold.png",
+                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6161.png",
                     profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/1301.png"
                 },
                 soloqDivison: {
-                    divisionName: "Kassadin's Warmongers",
-                    divsionRank: "V",
-                    tier: "DIAMOND",
+                    divisionName: "Kassadin's Maulers",
+                    divsionRank: "II",
+                    tier: "GOLD",
                     queue: "RANKED_SOLO_5x5",
-                    wins: 254,
-                    losses: 229
+                    wins: 83,
+                    losses: 99
                 },
                 runeInfo: [
                     {
-                        name: "Greater Mark of Magic Penetration",
+                        name: "Greater Mark of Attack Damage",
                         count: 9,
                         image: {
                             full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_1_3.png"
                         },
-                        description: "+0.87 magic penetration",
+                        description: "+0.95 attack damage",
+                        stats: {
+                            flatPhysicalDamageMod: 0.945
+                        }
+                    },
+                    {
+                        name: "Greater Glyph of Armor",
+                        count: 1,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_1_3.png"
+                        },
+                        description: "+0.7 armor",
                         stats: {
                             flatPhysicalDamageMod: 0
                         }
                     },
                     {
                         name: "Greater Glyph of Magic Resist",
-                        count: 6,
+                        count: 8,
                         image: {
                             full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
                         },
                         description: "+1.34 magic resist",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Glyph of Ability Power",
-                        count: 3,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
-                        },
-                        description: "+1.19 ability power",
                         stats: {
                             flatPhysicalDamageMod: 0
                         }
@@ -113,12 +161,12 @@ riotApp.controller("mainCtrl", function($scope){
                         }
                     },
                     {
-                        name: "Greater Quintessence of Ability Power",
+                        name: "Greater Quintessence of Attack Speed",
                         count: 3,
                         image: {
                             full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_3_3.png"
                         },
-                        description: "+4.95 ability power",
+                        description: "+4.5% attack speed",
                         stats: {
                             flatPhysicalDamageMod: 0
                         }
@@ -126,25 +174,25 @@ riotApp.controller("mainCtrl", function($scope){
                 ]
             },
             {
-                summonerName: "foreverbog",
-                summonerId: 54403198,
-                championName: null,
-                teamId: 54403198,
+                summonerName: "MarkoThePunisher",
+                summonerId: 56303130,
+                championName: "Thresh",
+                teamId: 100,
                 imgInfo: {
-                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Sivir.png",
+                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Thresh.png",
                     summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerHeal.png",
-                    divisionImg: "http://localhost:8080/RESTfulExample/base_icons/platinum.png",
-                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6161.png",
-                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/660.png"
+                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerExhaust.png",
+                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/silver.png",
+                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6263.png",
+                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/685.png"
                 },
                 soloqDivison: {
-                    divisionName: "Twisted Fate's Spellswords",
+                    divisionName: "Irelia's Villains",
                     divsionRank: "I",
-                    tier: "PLATINUM",
+                    tier: "SILVER",
                     queue: "RANKED_SOLO_5x5",
-                    wins: 843,
-                    losses: 877
+                    wins: 278,
+                    losses: 263
                 },
                 runeInfo: [
                     {
@@ -159,8 +207,19 @@ riotApp.controller("mainCtrl", function($scope){
                         }
                     },
                     {
+                        name: "Greater Glyph of Armor",
+                        count: 2,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_1_3.png"
+                        },
+                        description: "+0.7 armor",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
                         name: "Greater Glyph of Magic Resist",
-                        count: 9,
+                        count: 7,
                         image: {
                             full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
                         },
@@ -170,170 +229,23 @@ riotApp.controller("mainCtrl", function($scope){
                         }
                     },
                     {
-                        name: "Greater Seal of Armor",
-                        count: 9,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_1_3.png"
-                        },
-                        description: "+1 armor",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Quintessence of Attack Speed",
-                        count: 3,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_3_3.png"
-                        },
-                        description: "+4.5% attack speed",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    }
-                ]
-            },
-            {
-                summonerName: "Poqwei",
-                summonerId: 25144363,
-                championName: null,
-                teamId: 25144363,
-                imgInfo: {
-                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Ezreal.png",
-                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerHeal.png",
-                    divisionImg: "http://localhost:8080/RESTfulExample/base_icons/diamond.png",
-                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6162.png",
-                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/775.png"
-                },
-                soloqDivison: {
-                    divisionName: "Skarner's Shadehunters",
-                    divsionRank: "V",
-                    tier: "DIAMOND",
-                    queue: "RANKED_SOLO_5x5",
-                    wins: 161,
-                    losses: 161
-                },
-                runeInfo: [
-                    {
-                        name: "Greater Mark of Attack Damage",
-                        count: 9,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_1_3.png"
-                        },
-                        description: "+0.95 attack damage",
-                        stats: {
-                            flatPhysicalDamageMod: 0.945
-                        }
-                    },
-                    {
-                        name: "Greater Glyph of Scaling Magic Resist",
-                        count: 3,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_4_3.png"
-                        },
-                        description: "+0.16 magic resist per level (+3 at champion level 18)",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Glyph of Scaling Cooldown Reduction",
-                        count: 6,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_2_3.png"
-                        },
-                        description: "-0.09% cooldowns per level (-1.67% at champion level 18)",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Seal of Armor",
-                        count: 9,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_1_3.png"
-                        },
-                        description: "+1 armor",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Quintessence of Attack Speed",
-                        count: 3,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_3_3.png"
-                        },
-                        description: "+4.5% attack speed",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    }
-                ]
-            },
-            {
-                summonerName: "Brajlex",
-                summonerId: 22278850,
-                championName: null,
-                teamId: 22278850,
-                imgInfo: {
-                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Syndra.png",
-                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerDot.png",
-                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    divisionImg: "http://localhost:8080/RESTfulExample/base_icons/platinum.png",
-                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6362.png",
-                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/682.png"
-                },
-                soloqDivison: {
-                    divisionName: "Lulu's Runemasters",
-                    divsionRank: "V",
-                    tier: "PLATINUM",
-                    queue: "RANKED_SOLO_5x5",
-                    wins: 192,
-                    losses: 224
-                },
-                runeInfo: [
-                    {
-                        name: "Greater Mark of Magic Penetration",
-                        count: 9,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_1_3.png"
-                        },
-                        description: "+0.87 magic penetration",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Glyph of Scaling Cooldown Reduction",
-                        count: 9,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_2_3.png"
-                        },
-                        description: "-0.09% cooldowns per level (-1.67% at champion level 18)",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Seal of Magic Resist",
+                        name: "Greater Seal of Health",
                         count: 9,
                         image: {
                             full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_3_3.png"
                         },
-                        description: "+0.74 magic resist",
+                        description: "+8 health",
                         stats: {
                             flatPhysicalDamageMod: 0
                         }
                     },
                     {
-                        name: "Greater Quintessence of Ability Power",
+                        name: "Greater Quintessence of Armor",
                         count: 3,
                         image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_3_3.png"
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_1_3.png"
                         },
-                        description: "+4.95 ability power",
+                        description: "+4.26 armor",
                         stats: {
                             flatPhysicalDamageMod: 0
                         }
@@ -341,56 +253,56 @@ riotApp.controller("mainCtrl", function($scope){
                 ]
             },
             {
-                summonerName: "sh0q",
-                summonerId: 26663798,
-                championName: null,
-                teamId: 26663798,
+                summonerName: "TheDudÃ©",
+                summonerId: 38035513,
+                championName: "Syndra",
+                teamId: 100,
                 imgInfo: {
-                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Elise.png",
-                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerSmite.png",
+                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Syndra.png",
+                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerBarrier.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    divisionImg: "http://localhost:8080/RESTfulExample/base_icons/diamond.png",
+                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/gold.png",
                     masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6362.png",
-                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/1296.png"
+                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/1109.png"
                 },
                 soloqDivison: {
-                    divisionName: "Sejuani's Berserkers",
+                    divisionName: "Draven's Maulers",
                     divsionRank: "V",
-                    tier: "DIAMOND",
+                    tier: "GOLD",
                     queue: "RANKED_SOLO_5x5",
-                    wins: 673,
-                    losses: 658
+                    wins: 637,
+                    losses: 637
                 },
                 runeInfo: [
                     {
-                        name: "Greater Mark of Attack Speed",
+                        name: "Greater Mark of Ability Power",
                         count: 9,
                         image: {
                             full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_3_3.png"
                         },
-                        description: "+1.7% attack speed",
+                        description: "+0.59 ability power",
                         stats: {
                             flatPhysicalDamageMod: 0
                         }
                     },
                     {
-                        name: "Greater Glyph of Ability Power",
+                        name: "Greater Glyph of Magic Resist",
                         count: 9,
                         image: {
                             full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
                         },
-                        description: "+1.19 ability power",
+                        description: "+1.34 magic resist",
                         stats: {
                             flatPhysicalDamageMod: 0
                         }
                     },
                     {
-                        name: "Greater Seal of Armor",
+                        name: "Greater Seal of Ability Power",
                         count: 9,
                         image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_1_3.png"
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_3_3.png"
                         },
-                        description: "+1 armor",
+                        description: "+0.59 ability power",
                         stats: {
                             flatPhysicalDamageMod: 0
                         }
@@ -409,25 +321,25 @@ riotApp.controller("mainCtrl", function($scope){
                 ]
             },
             {
-                summonerName: "WÃ¶lf",
-                summonerId: 24358953,
-                championName: null,
-                teamId: 24358953,
+                summonerName: "GoodAndy",
+                summonerId: 40657991,
+                championName: "Diana",
+                teamId: 100,
                 imgInfo: {
-                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/RekSai.png",
-                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerSmite.png",
-                    divisionImg: "http://localhost:8080/RESTfulExample/base_icons/platinum.png",
-                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6262.png",
-                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/933.png"
+                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Diana.png",
+                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerSmite.png",
+                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
+                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/silver.png",
+                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6362.png",
+                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/1229.png"
                 },
                 soloqDivison: {
-                    divisionName: "Shen's Tricksters",
-                    divsionRank: "I",
-                    tier: "PLATINUM",
+                    divisionName: "Alistar's Scions",
+                    divsionRank: "II",
+                    tier: "SILVER",
                     queue: "RANKED_SOLO_5x5",
-                    wins: 152,
-                    losses: 148
+                    wins: 226,
+                    losses: 216
                 },
                 runeInfo: [
                     {
@@ -476,237 +388,11 @@ riotApp.controller("mainCtrl", function($scope){
                     },
                     {
                         name: "Greater Quintessence of Attack Speed",
-                        count: 3,
+                        count: 1,
                         image: {
                             full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_3_3.png"
                         },
                         description: "+4.5% attack speed",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    }
-                ]
-            },
-            {
-                summonerName: "hi im Vie",
-                summonerId: 32745730,
-                championName: null,
-                teamId: 32745730,
-                imgInfo: {
-                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Malphite.png",
-                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerTeleport.png",
-                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    divisionImg: "http://localhost:8080/RESTfulExample/base_icons/platinum.png",
-                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6261.png",
-                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/529.png"
-                },
-                soloqDivison: {
-                    divisionName: "Anivia's Alliance",
-                    divsionRank: "I",
-                    tier: "PLATINUM",
-                    queue: "RANKED_SOLO_5x5",
-                    wins: 50,
-                    losses: 43
-                },
-                runeInfo: [
-                    {
-                        name: "Greater Mark of Magic Penetration",
-                        count: 9,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_1_3.png"
-                        },
-                        description: "+0.87 magic penetration",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Glyph of Magic Resist",
-                        count: 9,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
-                        },
-                        description: "+1.34 magic resist",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Seal of Armor",
-                        count: 9,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_1_3.png"
-                        },
-                        description: "+1 armor",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Quintessence of Ability Power",
-                        count: 3,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_3_3.png"
-                        },
-                        description: "+4.95 ability power",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    }
-                ]
-            },
-            {
-                summonerName: "eRs",
-                summonerId: 20377516,
-                championName: null,
-                teamId: 20377516,
-                imgInfo: {
-                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Leblanc.png",
-                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerDot.png",
-                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    divisionImg: "http://localhost:8080/RESTfulExample/base_icons/platinum.png",
-                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6362.png",
-                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/576.png"
-                },
-                soloqDivison: {
-                    divisionName: "Karthus's Stalkers",
-                    divsionRank: "II",
-                    tier: "PLATINUM",
-                    queue: "RANKED_SOLO_5x5",
-                    wins: 79,
-                    losses: 83
-                },
-                runeInfo: [
-                    {
-                        name: "Greater Mark of Magic Penetration",
-                        count: 9,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_1_3.png"
-                        },
-                        description: "+0.87 magic penetration",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Glyph of Magic Resist",
-                        count: 9,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
-                        },
-                        description: "+1.34 magic resist",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Seal of Armor",
-                        count: 9,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_1_3.png"
-                        },
-                        description: "+1 armor",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Quintessence of Movement Speed",
-                        count: 3,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_3_3.png"
-                        },
-                        description: "+1.5% movement speed",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    }
-                ]
-            },
-            {
-                summonerName: "StefanDupeczka",
-                summonerId: 32685893,
-                championName: null,
-                teamId: 32685893,
-                imgInfo: {
-                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Ekko.png",
-                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerTeleport.png",
-                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    divisionImg: "http://localhost:8080/RESTfulExample/base_icons/platinum.png",
-                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6261.png",
-                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/1111.png"
-                },
-                soloqDivison: {
-                    divisionName: "Skarner's Warriors",
-                    divsionRank: "III",
-                    tier: "PLATINUM",
-                    queue: "RANKED_SOLO_5x5",
-                    wins: 236,
-                    losses: 212
-                },
-                runeInfo: [
-                    {
-                        name: "Greater Mark of Attack Speed",
-                        count: 4,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_3_3.png"
-                        },
-                        description: "+1.7% attack speed",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Mark of Magic Penetration",
-                        count: 5,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_1_3.png"
-                        },
-                        description: "+0.87 magic penetration",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Glyph of Magic Resist",
-                        count: 8,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
-                        },
-                        description: "+1.34 magic resist",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Glyph of Ability Power",
-                        count: 1,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
-                        },
-                        description: "+1.19 ability power",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Seal of Scaling Health",
-                        count: 9,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_4_3.png"
-                        },
-                        description: "+1.33 health per level (+24 at champion level 18)",
-                        stats: {
-                            flatPhysicalDamageMod: 0
-                        }
-                    },
-                    {
-                        name: "Greater Quintessence of Scaling Cooldown Reduction",
-                        count: 1,
-                        image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_2_3.png"
-                        },
-                        description: "-0.28% cooldowns per level (-5% at champion level 18)",
                         stats: {
                             flatPhysicalDamageMod: 0
                         }
@@ -725,38 +411,253 @@ riotApp.controller("mainCtrl", function($scope){
                 ]
             },
             {
-                summonerName: "quintessential",
-                summonerId: 36486898,
-                championName: null,
-                teamId: 36486898,
+                summonerName: "moe163",
+                summonerId: 30437539,
+                championName: "Darius",
+                teamId: 100,
                 imgInfo: {
-                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Karma.png",
-                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerExhaust.png",
+                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Darius.png",
+                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerDot.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    divisionImg: "http://localhost:8080/RESTfulExample/base_icons/diamond.png",
-                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6363.png",
-                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/661.png"
+                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/gold.png",
+                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6261.png",
+                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/549.png"
                 },
                 soloqDivison: {
-                    divisionName: "Sejuani's Berserkers",
-                    divsionRank: "IV",
-                    tier: "DIAMOND",
+                    divisionName: "Fizz's Oracles",
+                    divsionRank: "V",
+                    tier: "GOLD",
                     queue: "RANKED_SOLO_5x5",
-                    wins: 258,
-                    losses: 244
+                    wins: 146,
+                    losses: 138
                 },
                 runeInfo: [
                     {
-                        name: "Glyph of Mana Regeneration",
-                        count: 5,
+                        name: "Greater Mark of Attack Damage",
+                        count: 8,
                         image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_2.png"
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_1_3.png"
                         },
-                        description: "+0.26 mana regen / 5 sec.",
+                        description: "+0.95 attack damage",
+                        stats: {
+                            flatPhysicalDamageMod: 0.945
+                        }
+                    },
+                    {
+                        name: "Greater Mark of Critical Chance",
+                        count: 1,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_3_3.png"
+                        },
+                        description: "+0.93% critical chance",
                         stats: {
                             flatPhysicalDamageMod: 0
                         }
                     },
+                    {
+                        name: "Greater Glyph of Magic Resist",
+                        count: 9,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
+                        },
+                        description: "+1.34 magic resist",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Greater Seal of Armor",
+                        count: 9,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_1_3.png"
+                        },
+                        description: "+1 armor",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Greater Quintessence of Attack Damage",
+                        count: 3,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_1_3.png"
+                        },
+                        description: "+2.25 attack damage",
+                        stats: {
+                            flatPhysicalDamageMod: 2.25
+                        }
+                    }
+                ]
+            },
+            {
+                summonerName: "TeaguEe",
+                summonerId: 22227819,
+                championName: "Evelynn",
+                teamId: 200,
+                imgInfo: {
+                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Evelynn.png",
+                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
+                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerSmite.png",
+                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/provisional.png",
+                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6162.png",
+                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/1232.png"
+                },
+                soloqDivison: {
+                    divisionName: "Unranked",
+                    divsionRank: null,
+                    tier: "Unranked",
+                    queue: null,
+                    wins: 0,
+                    losses: 0
+                },
+                runeInfo: [
+                    {
+                        name: "Greater Mark of Attack Speed",
+                        count: 9,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_3_3.png"
+                        },
+                        description: "+1.7% attack speed",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Greater Glyph of Attack Speed",
+                        count: 3,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
+                        },
+                        description: "+0.64% attack speed",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Greater Glyph of Scaling Cooldown Reduction",
+                        count: 6,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_2_3.png"
+                        },
+                        description: "-0.09% cooldowns per level (-1.67% at champion level 18)",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Greater Seal of Armor",
+                        count: 9,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_1_3.png"
+                        },
+                        description: "+1 armor",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Greater Quintessence of Attack Speed",
+                        count: 3,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_3_3.png"
+                        },
+                        description: "+4.5% attack speed",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    }
+                ]
+            },
+            {
+                summonerName: "Polo2801",
+                summonerId: 39314018,
+                championName: "Tryndamere",
+                teamId: 200,
+                imgInfo: {
+                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Tryndamere.png",
+                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerDot.png",
+                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerHaste.png",
+                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/provisional.png",
+                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6162.png",
+                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/588.png"
+                },
+                soloqDivison: {
+                    divisionName: "Unranked",
+                    divsionRank: null,
+                    tier: "Unranked",
+                    queue: null,
+                    wins: 0,
+                    losses: 0
+                },
+                runeInfo: [
+                    {
+                        name: "Greater Mark of Attack Damage",
+                        count: 9,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_1_3.png"
+                        },
+                        description: "+0.95 attack damage",
+                        stats: {
+                            flatPhysicalDamageMod: 0.945
+                        }
+                    },
+                    {
+                        name: "Greater Glyph of Magic Resist",
+                        count: 9,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
+                        },
+                        description: "+1.34 magic resist",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Greater Seal of Armor",
+                        count: 9,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_1_3.png"
+                        },
+                        description: "+1 armor",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Greater Quintessence of Attack Damage",
+                        count: 3,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_1_3.png"
+                        },
+                        description: "+2.25 attack damage",
+                        stats: {
+                            flatPhysicalDamageMod: 2.25
+                        }
+                    }
+                ]
+            },
+            {
+                summonerName: "Tom369CZ",
+                summonerId: 38374337,
+                championName: "Akali",
+                teamId: 200,
+                imgInfo: {
+                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Akali.png",
+                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerDot.png",
+                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
+                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/platinum.png",
+                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6164.png",
+                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/581.png"
+                },
+                soloqDivison: {
+                    divisionName: "Karma's Archons",
+                    divsionRank: "V",
+                    tier: "PLATINUM",
+                    queue: "RANKED_SOLO_5x5",
+                    wins: 41,
+                    losses: 58
+                },
+                runeInfo: [
                     {
                         name: "Greater Mark of Magic Penetration",
                         count: 9,
@@ -769,19 +670,131 @@ riotApp.controller("mainCtrl", function($scope){
                         }
                     },
                     {
-                        name: "Greater Glyph of Magic Resist",
-                        count: 4,
+                        name: "Greater Glyph of Scaling Magic Resist",
+                        count: 9,
                         image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_4_3.png"
                         },
-                        description: "+1.34 magic resist",
+                        description: "+0.16 magic resist per level (+3 at champion level 18)",
                         stats: {
                             flatPhysicalDamageMod: 0
                         }
                     },
                     {
-                        name: "Greater Seal of Health",
+                        name: "Greater Seal of Scaling Armor",
                         count: 9,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_2_3.png"
+                        },
+                        description: "+0.16 armor per level (+3 at champion level 18)",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Greater Quintessence of Ability Power",
+                        count: 3,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_3_3.png"
+                        },
+                        description: "+4.95 ability power",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    }
+                ]
+            },
+            {
+                summonerName: "Kamil1607",
+                summonerId: 37002682,
+                championName: "Sejuani",
+                teamId: 200,
+                imgInfo: {
+                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Sejuani.png",
+                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
+                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerExhaust.png",
+                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/gold.png",
+                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6263.png",
+                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/662.png"
+                },
+                soloqDivison: {
+                    divisionName: "Diana's Stalkers",
+                    divsionRank: "I",
+                    tier: "GOLD",
+                    queue: "RANKED_SOLO_5x5",
+                    wins: 123,
+                    losses: 102
+                },
+                runeInfo: [
+                    {
+                        name: "Mark of Attack Damage",
+                        count: 6,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_1_2.png"
+                        },
+                        description: "+0.74 attack damage",
+                        stats: {
+                            flatPhysicalDamageMod: 0.735
+                        }
+                    },
+                    {
+                        name: "Glyph of Health",
+                        count: 1,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_2.png"
+                        },
+                        description: "+2.08 health",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Glyph of Magic Resist",
+                        count: 8,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_2.png"
+                        },
+                        description: "+1.04 magic resist",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Seal of Health",
+                        count: 5,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_3_2.png"
+                        },
+                        description: "+6.24 health",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Quintessence of Health",
+                        count: 2,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_3_2.png"
+                        },
+                        description: "+20 health",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Greater Mark of Attack Damage",
+                        count: 3,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_1_3.png"
+                        },
+                        description: "+0.95 attack damage",
+                        stats: {
+                            flatPhysicalDamageMod: 0.945
+                        }
+                    },
+                    {
+                        name: "Greater Seal of Health",
+                        count: 4,
                         image: {
                             full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_3_3.png"
                         },
@@ -791,18 +804,87 @@ riotApp.controller("mainCtrl", function($scope){
                         }
                     },
                     {
-                        name: "Greater Quintessence of Armor",
-                        count: 3,
+                        name: "Greater Quintessence of Health",
+                        count: 1,
                         image: {
-                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_1_3.png"
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_3_3.png"
                         },
-                        description: "+4.26 armor",
+                        description: "+26 health",
                         stats: {
                             flatPhysicalDamageMod: 0
                         }
                     }
                 ]
+            },
+            {
+                summonerName: "Orlando1993",
+                summonerId: 35097320,
+                championName: "Ezreal",
+                teamId: 200,
+                imgInfo: {
+                    championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Ezreal.png",
+                    summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
+                    summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerHeal.png",
+                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/gold.png",
+                    masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6362.png",
+                    profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/654.png"
+                },
+                soloqDivison: {
+                    divisionName: "Gragas's Marksmen",
+                    divsionRank: "V",
+                    tier: "GOLD",
+                    queue: "RANKED_SOLO_5x5",
+                    wins: 61,
+                    losses: 41
+                },
+                runeInfo: [
+                    {
+                        name: "Greater Mark of Attack Damage",
+                        count: 9,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/r_1_3.png"
+                        },
+                        description: "+0.95 attack damage",
+                        stats: {
+                            flatPhysicalDamageMod: 0.945
+                        }
+                    },
+                    {
+                        name: "Greater Glyph of Magic Resist",
+                        count: 9,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/b_3_3.png"
+                        },
+                        description: "+1.34 magic resist",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Greater Seal of Armor",
+                        count: 9,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/y_1_3.png"
+                        },
+                        description: "+1 armor",
+                        stats: {
+                            flatPhysicalDamageMod: 0
+                        }
+                    },
+                    {
+                        name: "Greater Quintessence of Attack Damage",
+                        count: 3,
+                        image: {
+                            full: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/rune/bl_1_3.png"
+                        },
+                        description: "+2.25 attack damage",
+                        stats: {
+                            flatPhysicalDamageMod: 2.25
+                        }
+                    }
+                ]
             }
         ]
-    }
+    };
+
 });

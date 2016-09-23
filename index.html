@@ -1,18 +1,51 @@
 <html ng-app="liveGame">
+<meta name="viewport" content="width=device-width, initial-scale=2.0">
+
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body ng-controller="mainCtrl">
 
-    <summoner data="{{testData.summoners[0]}}"></summoner>
+<div style="text-align: center; padding: 50px;">
+    <form name="myForm" novalidate>
+        <input ng-keydown="searchInputKeyEvent($event)" ng-minlength="3" name="summonerName" ng-required="true"
+               ng-model="summonerName" type="text" placeholder="Summoner name...">
+        <button type="submit" ng-disabled="myForm.$invalid || requestIsProccesing" class="btn btn-primary btn-xs"
+                ng-click="searchLiveGameInfo()">Search <span class="glyphicon glyphicon-search"></span></button>
+    </form>
+    <div class="errorBox ng-cloak" ng-show="isErrorResponse">{{errorMessage}}</div>
+</div>
 
-    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script type="text/javascript" src="app.js"></script>
-    <script type="text/javascript" src="app/summoner/summonerController.js"></script>
-    <script type="text/javascript" src="app/summoner/summonerDirective.js"></script>
-    <script type="text/javascript" src="app/summoner/summonerService.js"></script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6" style="margin-bottom: 30px">
+                <span ng-repeat="summoner in testData.summoners | filter: purpleFilter">
+                    <left-summoner data="{{summoner}}"></left-summoner>
+                </span>
+        </div>
+        <div class="col-lg-6">
+                <span ng-repeat="summoner in testData.summoners | filter: blueFilter">
+                    <right-summoner class="largeScreen" data="{{summoner}}"></right-summoner>
+                    <left-summoner class="smallScreen" data="{{summoner}}"></left-summoner>
+                </span>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="app/leftSummoner/leftSummonerController.js"></script>
+<script type="text/javascript" src="app/leftSummoner/leftSummonerDirective.js"></script>
+<script type="text/javascript" src="app/rightSummoner/rightSummonerDirective.js"></script>
+<script type="text/javascript" src="app/services/summonerService.js"></script>
 </body>
 </html>

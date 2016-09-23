@@ -1,0 +1,73 @@
+*{
+    box-sizing: border-box;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+@media screen and (max-width: 1200px) {
+
+    .largeScreen{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .winlos{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1201px){
+
+    .smallScreen{
+        display: none;
+        color: blue;
+    }
+}
+
+.errorBox{
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+
+img {
+    max-width:100%;
+}
+
+
+.champion{
+    max-width: 8%;
+}
+
+.summonerDivision{
+    max-width: 8%;
+}
+
+.mastery{
+    max-width: 3.5%;
+}
+
+.summonerSpell{
+    max-width: 4%;
+}
+
+.leftSummonerName{
+    font-weight: bold;
+    font-size: medium;
+    color: purple;
+}
+
+.rightSummonerName{
+    font-weight: bold;
+    font-size: medium;
+    color: blue;
+}
+
+.divisionRank{
+    font-weight: bold;
+    font-size: 85%;
+}
+

@@ -1,11 +1,11 @@
-riotApp.directive("summoner", function(){
+riotApp.directive("rightSummoner", function () {
     return {
         restrict: 'EA',
         scope: {
-            data :'@'
+            data: '@'
         },
-        templateUrl: 'app/summoner/summonerView.html',
-        link: function(scope){
+        templateUrl: 'app/rightSummoner/rightSummonerView.html',
+        link: function (scope) {
             scope.info = angular.fromJson(scope.data);
         }
     }
