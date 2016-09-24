@@ -2,9 +2,9 @@
     <span class="winlos">(<span style="color:blue">{{info.soloqDivison.wins}} </span> / <span style="color:red">{{info.soloqDivison.losses}}</span>)</span>
     <span class="divisionRank">{{info.soloqDivison.tier}} {{info.soloqDivison.divsionRank}}</span>
     <img class="summonerDivision"title="{{info.soloqDivison.divisionName}}" ng-src="{{info.imgInfo.divisionImg}}"/>
-    <span class="rightSummonerName" title="asdafas" >{{info.summonerName}}</span>
+    <span class="rightSummonerName" title="asdafas" data-toggle="modal" data-target="#playerInfoModal" >{{info.summonerName}}</span>
     <img class="img-rounded mastery" title="asdafas" ng-src="{{info.imgInfo.masteryImg}}"/>
-    <img class="champion img-circle" ng-src="{{info.imgInfo.championImg}}"/>
+    <img class="champion img-circle" data-toggle="modal" data-target="#playerInfoModal" ng-src="{{info.imgInfo.championImg}}"/>
     <img class="summonerSpell" title="asdafas" ng-src="{{info.imgInfo.summonerSpell2Img}}"/>
     <img class="summonerSpell" ng-src="{{info.imgInfo.summonerSpell1Img}}"/>
 </div>

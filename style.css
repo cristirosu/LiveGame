@@ -27,6 +27,8 @@
     }
 }
 
+
+
 .errorBox{
     color: red;
     font-size: large;
@@ -40,9 +42,19 @@ img {
 
 .champion{
     max-width: 8%;
+    cursor: hand;
 }
 
 .summonerDivision{
+    max-width: 8%;
+}
+
+.profileImage{
+    max-width: 12%;
+    display: inline-block;
+}
+
+.runeImage{
     max-width: 8%;
 }
 
@@ -58,16 +70,23 @@ img {
     font-weight: bold;
     font-size: medium;
     color: purple;
+    cursor: hand;
 }
 
 .rightSummonerName{
     font-weight: bold;
     font-size: medium;
     color: blue;
+    cursor: hand;
 }
 
 .divisionRank{
     font-weight: bold;
     font-size: 85%;
 }
+
+.summonerInfoModal{
+    text-align: center;
+}
+
 

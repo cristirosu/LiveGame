@@ -1,10 +1,14 @@
 <div style="text-align: center;">
     <img class="summonerSpell" ng-src="{{info.imgInfo.summonerSpell1Img}}"/>
     <img class="summonerSpell" ng-src="{{info.imgInfo.summonerSpell2Img}}"/>
-    <img class="img-circle champion" ng-src="{{info.imgInfo.championImg}}"/>
+    <img class="img-circle champion" data-toggle="modal" data-target="#playerInfoModal"  ng-src="{{info.imgInfo.championImg}}"/>
     <img class="img-rounded mastery" ng-src="{{info.imgInfo.masteryImg}}"/>
-    <span ng-class="{'leftSummonerName': info.teamId == 200, 'rightSummonerName':info.teamId == 100}" >{{info.summonerName}}</span>
+    <span ng-class="{'leftSummonerName': info.teamId == 200, 'rightSummonerName':info.teamId == 100}" data-toggle="modal" data-target="#playerInfoModal">{{info.summonerName}}</span>
     <img class="summonerDivision" ng-src="{{info.imgInfo.divisionImg}}"/>
     <span class="divisionRank">{{info.soloqDivison.tier}} {{info.soloqDivison.divsionRank}}</span>
     <span class="winlos">(<span style="color:blue">{{info.soloqDivison.wins}} </span> / <span style="color:red">{{info.soloqDivison.losses}}</span>)</span>
 </div>
+
+<!-- Trigger the modal with a button -->
+<!--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>-->
+

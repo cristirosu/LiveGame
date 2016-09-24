@@ -25,17 +25,45 @@
     <div class="row">
         <div class="col-lg-6" style="margin-bottom: 30px">
                 <span ng-repeat="summoner in testData.summoners | filter: purpleFilter">
-                    <left-summoner data="{{summoner}}"></left-summoner>
+                    <left-summoner ng-click="setModalData(summoner)" data="{{summoner}}"></left-summoner>
                 </span>
         </div>
         <div class="col-lg-6">
                 <span ng-repeat="summoner in testData.summoners | filter: blueFilter">
-                    <right-summoner class="largeScreen" data="{{summoner}}"></right-summoner>
-                    <left-summoner class="smallScreen" data="{{summoner}}"></left-summoner>
+                    <right-summoner ng-click="setModalData(summoner)" class="largeScreen" data="{{summoner}}"></right-summoner>
+                    <left-summoner ng-click="setModalData(summoner)" class="smallScreen" data="{{summoner}}"></left-summoner>
                 </span>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div id="playerInfoModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header summonerInfoModal">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <img class="profileImage img-circle" ng-src="{{currentModalData.imgInfo.profileImg}}"/>
+                <h4 class="modal-title"><b>{{currentModalData.summonerName}}</b></h4>
+            </div>
+            <div class="modal-body">
+                <div ng-repeat="rune in currentModalData.runeInfo">
+                    <img class="runeImage"  title="{{rune.name}}" ng-src="{{rune.image.full}}"/>
+                    <span>{{rune.description}}</span>
+                    <span><b>x{{rune.count}}</b></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 
 
 
@@ -43,6 +71,8 @@
 <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="app/leftSummoner/leftSummonerController.js"></script>
+<script type="text/javascript" src="app/playerInfo/playerInfoDirective.js"></script>
 <script type="text/javascript" src="app/leftSummoner/leftSummonerController.js"></script>
 <script type="text/javascript" src="app/leftSummoner/leftSummonerDirective.js"></script>
 <script type="text/javascript" src="app/rightSummoner/rightSummonerDirective.js"></script>

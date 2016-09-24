@@ -5,6 +5,7 @@ riotApp.controller("mainCtrl", function ($scope, summonerService) {
     $scope.isErrorResponse = false;
     $scope.errorMessage = "";
     $scope.requestIsProccesing = false;
+    $scope.currentModalData = "";
 
     $scope.searchLiveGameInfo = function () {
         $scope.requestIsProccesing = true;
@@ -28,6 +29,10 @@ riotApp.controller("mainCtrl", function ($scope, summonerService) {
                     $scope.requestIsProccesing = false;
                 }
             )
+    };
+
+    $scope.setModalData = function(summoner){
+        $scope.currentModalData = summoner;
     };
 
     $scope.printWidth = function(){
@@ -103,7 +108,7 @@ riotApp.controller("mainCtrl", function ($scope, summonerService) {
                     championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Kalista.png",
                     summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerHeal.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/gold.png",
+                    divisionImg: "http://cristi.red:8080/RESTfulExample/base_icons/gold.png",
                     masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6161.png",
                     profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/1301.png"
                 },
@@ -182,7 +187,7 @@ riotApp.controller("mainCtrl", function ($scope, summonerService) {
                     championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Thresh.png",
                     summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerExhaust.png",
-                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/silver.png",
+                    divisionImg: "http://cristi.red:8080/RESTfulExample/base_icons/silver.png",
                     masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6263.png",
                     profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/685.png"
                 },
@@ -261,7 +266,7 @@ riotApp.controller("mainCtrl", function ($scope, summonerService) {
                     championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Syndra.png",
                     summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerBarrier.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/gold.png",
+                    divisionImg: "http://cristi.red:8080/RESTfulExample/base_icons/gold.png",
                     masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6362.png",
                     profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/1109.png"
                 },
@@ -329,7 +334,7 @@ riotApp.controller("mainCtrl", function ($scope, summonerService) {
                     championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Diana.png",
                     summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerSmite.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/silver.png",
+                    divisionImg: "http://cristi.red:8080/RESTfulExample/base_icons/silver.png",
                     masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6362.png",
                     profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/1229.png"
                 },
@@ -419,7 +424,7 @@ riotApp.controller("mainCtrl", function ($scope, summonerService) {
                     championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Darius.png",
                     summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerDot.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/gold.png",
+                    divisionImg: "http://cristi.red:8080/RESTfulExample/base_icons/gold.png",
                     masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6261.png",
                     profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/549.png"
                 },
@@ -498,7 +503,7 @@ riotApp.controller("mainCtrl", function ($scope, summonerService) {
                     championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Evelynn.png",
                     summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerSmite.png",
-                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/provisional.png",
+                    divisionImg: "http://cristi.red:8080/RESTfulExample/base_icons/provisional.png",
                     masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6162.png",
                     profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/1232.png"
                 },
@@ -577,7 +582,7 @@ riotApp.controller("mainCtrl", function ($scope, summonerService) {
                     championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Tryndamere.png",
                     summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerDot.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerHaste.png",
-                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/provisional.png",
+                    divisionImg: "http://cristi.red:8080/RESTfulExample/base_icons/provisional.png",
                     masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6162.png",
                     profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/588.png"
                 },
@@ -645,7 +650,7 @@ riotApp.controller("mainCtrl", function ($scope, summonerService) {
                     championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Akali.png",
                     summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerDot.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
-                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/platinum.png",
+                    divisionImg: "http://cristi.red:8080/RESTfulExample/base_icons/platinum.png",
                     masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6164.png",
                     profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/581.png"
                 },
@@ -713,7 +718,7 @@ riotApp.controller("mainCtrl", function ($scope, summonerService) {
                     championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Sejuani.png",
                     summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerExhaust.png",
-                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/gold.png",
+                    divisionImg: "http://cristi.red:8080/RESTfulExample/base_icons/gold.png",
                     masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6263.png",
                     profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/662.png"
                 },
@@ -825,7 +830,7 @@ riotApp.controller("mainCtrl", function ($scope, summonerService) {
                     championImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/Ezreal.png",
                     summonerSpell1Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerFlash.png",
                     summonerSpell2Img: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/spell/SummonerHeal.png",
-                    divisionImg: "http://192.168.1.129:8080/RESTfulExample/base_icons/gold.png",
+                    divisionImg: "http://cristi.red:8080/RESTfulExample/base_icons/gold.png",
                     masteryImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/mastery/6362.png",
                     profileImg: "http://ddragon.leagueoflegends.com/cdn/6.18.1/img/profileicon/654.png"
                 },
